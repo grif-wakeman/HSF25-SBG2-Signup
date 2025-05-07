@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HSF25 SBG2 Signup</title>
     <style>
         body {
@@ -13,6 +13,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .img-container {
@@ -27,47 +28,107 @@
         }
 
         @media screen and (max-width: 525px) {
-  .img-container {
-    max-width: 384px;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-bottom: 0px;
-  }
+            .img-container {
+                max-width: 384px;
+                padding: 20px;
+                padding-bottom: 0;
+            }
 
-  form {
-    padding-top: 0px !important;
-  }
-}
+            form {
+                padding-top: 0 !important;
+            }
+        }
 
-@media screen and (max-height: 525px) {
-  .img-container {
-    margin-top: 100px;
-  }
-
-}
+        @media screen and (max-height: 525px) {
+            .img-container {
+                margin-top: 100px;
+            }
+        }
     </style>
-    <script>
-        (function (s, e, n, d, er) {
-            s['Sender'] = er;
-            s[er] = s[er] || function () {
-                (s[er].q = s[er].q || []).push(arguments)
-            }, s[er].l = 1 * new Date();
-            var a = e.createElement(n),
-                m = e.getElementsByTagName(n)[0];
-            a.async = 1;
-            a.src = d;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
-        sender('02d82bcdba6983')
-    </script>
 </head>
 
 <body>
     <div class="img-container">
-        <img src="./Guess That Sync Form Banner.png" alt="" srcset="">
+        <img src="./Guess That Sync Form Banner.png" alt="Signup Banner" />
     </div>
     <div style="text-align: left" class="sender-form-field" data-sender-form-id="mact1ehye9rob48bzch"></div>
+
+    <script>
+        (function (s, e, n, d, er) {
+            s['Sender'] = er;
+            s[er] = s[er] || function () {
+                (s[er].q = s[er].q || []).push(arguments);
+            };
+            s[er].l = 1 * new Date();
+            var a = e.createElement(n),
+                m = e.getElementsByTagName(n)[0];
+            a.async = 1;
+            a.src = d;
+            m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
+
+        sender('02d82bcdba6983');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const watchForSubmission = setInterval(() => {
+                const iframe = document.querySelector("iframe");
+                if (!iframe) return;
+
+                clearInterval(watchForSubmission);
+
+                const pollHeight = setInterval(() => {
+                    const height = iframe.clientHeight;
+                    if (height > 0 && height < 200) {
+                        clearInterval(pollHeight);
+                        triggerConfetti();
+                    }
+                }, 100);
+            }, 100);
+
+            function triggerConfetti() {
+                let count = 0;
+                const max = 5;
+                const positions = [0.25, 0.75];
+
+                // 🎯 Fire first burst immediately
+                confetti({
+                    particleCount: 40,
+                    spread: 120,
+                    startVelocity: 45,
+                    decay: 0.92,
+                    ticks: 350,
+                    scalar: 1.2,
+                    origin: {
+                        x: .5,
+                        y: 0.8
+                    }
+                });
+                count++;
+
+                // 🔁 Continue with timed bursts
+                const burst = setInterval(() => {
+                    confetti({
+                        particleCount: 40,
+                        spread: 120,
+                        startVelocity: 45,
+                        decay: 0.92,
+                        ticks: 350,
+                        scalar: 1.2,
+                        origin: {
+                            x: positions[count % positions.length],
+                            y: 0.6 + Math.random() * 0.2
+                        }
+                    });
+                    count++;
+                    if (count >= max) clearInterval(burst);
+                }, 1500);
+            }
+
+        });
+    </script>
 </body>
 
 </html>
